@@ -1,5 +1,5 @@
-from controllers.books_controller import books
+from controllers.albums_controller import albums
 
 registerable_controllers = [
-    books
+    albums
 ]
