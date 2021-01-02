@@ -16,6 +16,7 @@ def drop_db():
 @db_commands.cli.command("seed")
 def seed_db():
     from models.Album import Album
+    from models.Artist import Artist
     from faker import Faker
     faker = Faker()
 
@@ -23,6 +24,12 @@ def seed_db():
         album = Album()
         album.album_title = faker.unique.catch_phrase()
         db.session.add(album)
+    
+    for i in range(10):
+        artist = Artist()
+        artist.artist_title = faker.unique.name()
+        db.session.add(artist)
+    
     
     db.session.commit()
     print("Tables seeded")
