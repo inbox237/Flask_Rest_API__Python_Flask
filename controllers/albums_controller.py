@@ -16,7 +16,7 @@ def album_create():
     album_fields = album_schema.load(request.json)
 
     new_album = Album()
-    new_album.title = album_fields["title"]
+    new_album.album_title = album_fields["album_title"]
     
     db.session.add(new_album)
     db.session.commit()

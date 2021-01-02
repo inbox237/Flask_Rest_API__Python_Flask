@@ -21,7 +21,7 @@ def seed_db():
 
     for i in range(10):
         album = Album()
-        album.title = faker.catch_phrase()
+        album.album_title = faker.unique.catch_phrase()
         db.session.add(album)
     
     db.session.commit()
