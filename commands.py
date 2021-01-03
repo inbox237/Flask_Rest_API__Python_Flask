@@ -17,20 +17,31 @@ def drop_db():
 def seed_db():
     from models.Album import Album
     from models.Artist import Artist
+    from models.Album_Artist_Association import album_artist_association_table as aaat
     from faker import Faker
+    import random
     faker = Faker()
 
-    for i in range(10):
+    association_pairs = []
+    for i in range(1,11):
         artist = Artist()
         album = Album()
-        
+
+
         artist.artist_name = faker.unique.name()
         album.album_title = faker.unique.catch_phrase()
         
+        #Link pairs
+        association_pairs.append((random.randint(1,10),random.randint(1,10)))
+
         db.session.add(artist)
         db.session.add(album)
+
     
-       
+    #create main tables   
+    db.session.commit()
+    #create association table
+    db.session.execute(aaat.insert().values(association_pairs))
     db.session.commit()
     print("Tables seeded")
 
