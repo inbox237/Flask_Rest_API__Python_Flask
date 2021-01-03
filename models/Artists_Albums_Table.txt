@@ -1,6 +1,0 @@
-from main import db
-
-artists_albums_table = db.Table("artists_albums_association", db.Model.metadata,
-   db.Column("joint_artist_id", db.Integer, db.ForeignKey("artists.id")),
-   db.Column("joint_album_id", db.Integer, db.ForeignKey("albums.id"))
-   )

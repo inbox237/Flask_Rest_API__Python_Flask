@@ -16,7 +16,7 @@ def artist_create():
     artist_fields = artist_schema.load(request.json)
 
     new_artist = Artist()
-    new_artist.artist_title = artist_fields["artist_title"]
+    new_artist.artist_name = artist_fields["artist_name"]
     
     db.session.add(new_artist)
     db.session.commit()

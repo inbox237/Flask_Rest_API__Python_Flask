@@ -24,7 +24,7 @@ def seed_db():
         artist = Artist()
         album = Album()
         
-        artist.artist_title = faker.unique.name()
+        artist.artist_name = faker.unique.name()
         album.album_title = faker.unique.catch_phrase()
         
         db.session.add(artist)
