@@ -23,26 +23,26 @@ def album_create():
     
     return jsonify(album_schema.dump(new_album))
 
-@albums.route("/<int:album_id>", methods=["GET"])
-def album_show(album_id):
+@albums.route("/<int:id>", methods=["GET"])
+def album_show(id):
     #Return a single album
-    album = Album.query.get(album_id)
+    album = Album.query.get(id)
     return jsonify(album_schema.dump(album))
 
-@albums.route("/<int:album_id>", methods=["PUT", "PATCH"])
-def album_update(album_id):
+@albums.route("/<int:id>", methods=["PUT", "PATCH"])
+def album_update(id):
     #Update a album
-    albums = Album.query.filter_by(album_id=album_id)
+    albums = Album.query.filter_by(id=id)
     album_fields = album_schema.load(request.json)
     albums.update(album_fields)
     db.session.commit()
 
     return jsonify(album_schema.dump(albums[0]))
 
-@albums.route("/<int:album_id>", methods=["DELETE"])
-def album_delete(album_id):
+@albums.route("/<int:id>", methods=["DELETE"])
+def album_delete(id):
     #Delete a album
-    album = Album.query.get(album_id)
+    album = Album.query.get(id)
     db.session.delete(album)
     db.session.commit()
 

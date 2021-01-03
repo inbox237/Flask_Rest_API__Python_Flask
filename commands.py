@@ -21,16 +21,16 @@ def seed_db():
     faker = Faker()
 
     for i in range(10):
+        artist = Artist()
         album = Album()
+        
+        artist.artist_title = faker.unique.name()
         album.album_title = faker.unique.catch_phrase()
+        
+        db.session.add(artist)
         db.session.add(album)
     
-    for i in range(10):
-        artist = Artist()
-        artist.artist_title = faker.unique.name()
-        db.session.add(artist)
-    
-    
+       
     db.session.commit()
     print("Tables seeded")
 

@@ -23,26 +23,26 @@ def artist_create():
     
     return jsonify(artist_schema.dump(new_artist))
 
-@artists.route("/<int:artist_id>", methods=["GET"])
-def artist_show(artist_id):
+@artists.route("/<int:id>", methods=["GET"])
+def artist_show(id):
     #Return a single artist
-    artist = Artist.query.get(artist_id)
+    artist = Artist.query.get(id)
     return jsonify(artist_schema.dump(artist))
 
-@artists.route("/<int:artist_id>", methods=["PUT", "PATCH"])
-def artist_update(artist_id):
+@artists.route("/<int:id>", methods=["PUT", "PATCH"])
+def artist_update(id):
     #Update a artist
-    artists = Artist.query.filter_by(artist_id=artist_id)
+    artists = Artist.query.filter_by(id=id)
     artist_fields = artist_schema.load(request.json)
     artists.update(artist_fields)
     db.session.commit()
 
     return jsonify(artist_schema.dump(artists[0]))
 
-@artists.route("/<int:artist_id>", methods=["DELETE"])
-def artist_delete(artist_id):
+@artists.route("/<int:id>", methods=["DELETE"])
+def artist_delete(id):
     #Delete a artist
-    artist = Artist.query.get(artist_id)
+    artist = Artist.query.get(id)
     db.session.delete(artist)
     db.session.commit()
 
