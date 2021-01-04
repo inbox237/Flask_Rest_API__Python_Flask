@@ -27,9 +27,11 @@ def seed_db():
         artist = Artist()
         album = Album()
 
-
         artist.artist_name = faker.unique.name()
         album.album_title = faker.unique.catch_phrase()
+        
+        #Need to fix
+        artist.artist_s_albums_list = faker.catch_phrase()
         
         #Link pairs
         association_pairs.append((random.randint(1,10),random.randint(1,10)))
