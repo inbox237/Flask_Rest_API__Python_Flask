@@ -23,6 +23,8 @@ def seed_db():
     faker = Faker()
 
     association_pairs = []
+    
+    count = [0]*10
     for i in range(1,11):
         artist = Artist()
         album = Album()
@@ -30,20 +32,34 @@ def seed_db():
         artist.artist_name = faker.unique.name()
         album.album_title = faker.unique.catch_phrase()
         
-        #Need to fix
-        artist.artist_s_albums_list = faker.catch_phrase()
-        
+       
         #Link pairs
-        association_pairs.append((random.randint(1,10),random.randint(1,10)))
+        art_int = random.randint(1,10)
+        alb_int = random.randint(1,10)
+        #don't enter duplicates
+        while (art_int,alb_int) in association_pairs:
+            art_int = random.randint(1,10)
+            alb_int = random.randint(1,10)
+        count[art_int-1]+=1
+        association_pairs.append((art_int,alb_int))
 
         db.session.add(artist)
         db.session.add(album)
 
     
+  
     #create main tables   
     db.session.commit()
+    #Count Artist's Albums
+    print(f'art_count: {count}')
+    for i,val in enumerate(count):
+        print(f'ind: {i} val: {val}')
+        artist = db.session.query(Artist).filter(Artist.id==i+1).one()
+        artist.artist_s_albums_count = val
+        db.session.commit()
     #create association table
     db.session.execute(aaat.insert().values(association_pairs))
     db.session.commit()
+
     print("Tables seeded")
 

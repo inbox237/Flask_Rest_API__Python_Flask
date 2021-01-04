@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from flask import Flask, jsonify
 from marshmallow.exceptions import ValidationError
 from flask_sqlalchemy import SQLAlchemy

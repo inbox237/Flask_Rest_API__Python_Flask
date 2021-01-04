@@ -6,7 +6,7 @@ class Artist(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     artist_name = db.Column(db.String())
-    artist_s_albums_list = db.Column(db.String())
+    artist_s_albums_count = db.Column(db.Integer())
     artist_s_albums = db.relationship("Album",
                         secondary=album_artist_association_table,
                         back_populates="album_s_artists")
