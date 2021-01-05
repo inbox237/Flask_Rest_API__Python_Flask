@@ -10,3 +10,6 @@ class Album(db.Model):
     album_s_artists = db.relationship("Artist",
                         secondary=album_artist_association_table,
                         back_populates="artist_s_albums")
+
+    def __repr__(self):
+        return f"<Album {self.album_title}>"

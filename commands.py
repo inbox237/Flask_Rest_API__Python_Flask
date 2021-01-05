@@ -17,18 +17,31 @@ def drop_db():
 def seed_db():
     from models.Album import Album
     from models.Artist import Artist
+    from models.User import User
     from models.Album_Artist_Association import album_artist_association_table as aaat
+    
+    from main import bcrypt
     from faker import Faker
     import random
     faker = Faker()
 
+    users = []
     association_pairs = []
     count = [0]*10
+
+    for i in range(5):
+        user = User()
+        user.email = f"test{i}@test.com"
+        user.password = bcrypt.generate_password_hash("123456").decode("utf-8")
+        db.session.add(user)
+        users.append(user)
+
+    db.session.commit()
     
     for i in range(1,11):
         artist = Artist()
         album = Album()
-
+        artist.user_id = random.choice(users).id
         artist.artist_name = faker.unique.name()
         album.album_title = faker.unique.catch_phrase()
         
