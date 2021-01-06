@@ -74,6 +74,14 @@ def seed_db():
         artist.artist_s_albums_count = val
         db.session.commit()
 
+    #Count Album's Artists
+    print(f'art_count: {count}')
+    for i,val in enumerate(count):
+        print(f'ind: {i} val: {val}')
+        album = db.session.query(Album).filter(Album.id==i+1).one()
+        album.album_s_artists_count = val
+        db.session.commit()
+
     #create association table
     db.session.execute(aaat.insert().values(association_pairs))
     db.session.commit()

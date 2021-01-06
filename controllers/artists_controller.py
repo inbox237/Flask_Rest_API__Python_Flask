@@ -1,6 +1,8 @@
 from models.Artist import Artist
 from models.User import User
 from models.Album import Album
+
+
 from main import db
 from schemas.ArtistSchema import artist_schema, artists_schema
 from schemas.AlbumSchema import album_schema, albums_schema
@@ -15,20 +17,7 @@ artists = Blueprint('artists', __name__, url_prefix="/artists")
 def artist_index():
     #Retrieve all artists
     artists = Artist.query.options(joinedload("user")).all()
-    
-    albums = db.session.query(aaat).filter(aaat.c.artist_id == 4)
-    artist_query = Artist.query.get(4)
-    artist_list_new = []
-    art_scheme = artist_schema.dump(artist_query)
-    for album in albums:
-        album_scheme = album_schema.dump(Album.query.get(album.album_id))
-        artist_list_new.append((art_scheme, album_scheme))
-
     return render_template("artists.html", artists=artists)
-    #return jsonify(artists_schema.dump(artists))
-    #return jsonify(artist_list_new) 
-
-
 
 @artists.route("/", methods=["POST"])
 @jwt_required
@@ -57,7 +46,6 @@ def artist_create():
 def artist_show(id):
     #Return a single artist
     artist = Artist.query.get(id)
-
     return jsonify(artist_schema.dump(artist))
 
 ##### Ask Alex H to help me fix further later
@@ -80,10 +68,9 @@ def artist_list_albums(id):
 def artist_update(id):
     #Update a artist
     artist_fields = artist_schema.load(request.json)
+
     user_id = get_jwt_identity()
-
     user = User.query.get(user_id)
-
 
     if not user:
         return abort(401, description="Invalid user")

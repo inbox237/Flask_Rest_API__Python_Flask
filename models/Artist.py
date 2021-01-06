@@ -1,6 +1,8 @@
 from main import db
-from models.Album_Artist_Association import album_artist_association_table
-from models.User import User
+
+from models.Album_Artist_Association import album_artist_association_table as aaat
+
+
 
 class Artist(db.Model):
     __tablename__ = "artists"
@@ -9,8 +11,9 @@ class Artist(db.Model):
     artist_name = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     artist_s_albums_count = db.Column(db.Integer())
+    
     artist_s_albums = db.relationship("Album",
-                        secondary=album_artist_association_table,
+                        secondary=aaat,
                         back_populates="album_s_artists")
 
     def __repr__(self):

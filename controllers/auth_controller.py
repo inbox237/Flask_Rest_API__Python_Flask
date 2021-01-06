@@ -1,10 +1,10 @@
+from datetime import timedelta
+
+from flask import Blueprint, abort, jsonify, request
+from flask_jwt_extended import create_access_token
+from main import bcrypt, db
 from models.User import User
 from schemas.UserSchema import user_schema
-from main import db
-from main import bcrypt
-from flask_jwt_extended import create_access_token
-from datetime import timedelta
-from flask import Blueprint, request, jsonify, abort
 
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
