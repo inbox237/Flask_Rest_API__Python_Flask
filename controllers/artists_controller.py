@@ -4,7 +4,7 @@ from models.Album import Album
 from main import db
 from schemas.ArtistSchema import artist_schema, artists_schema
 from schemas.AlbumSchema import album_schema, albums_schema
-from flask import Blueprint, request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort, render_template
 from models.Album_Artist_Association import album_artist_association_table as aaat
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.orm import joinedload
@@ -12,11 +12,23 @@ from sqlalchemy.orm import joinedload
 artists = Blueprint('artists', __name__, url_prefix="/artists")
 
 @artists.route("/", methods=["GET"])
-@jwt_required
 def artist_index():
     #Retrieve all artists
     artists = Artist.query.options(joinedload("user")).all()
-    return jsonify(artists_schema.dump(artists))
+    
+    albums = db.session.query(aaat).filter(aaat.c.artist_id == 4)
+    artist_query = Artist.query.get(4)
+    artist_list_new = []
+    art_scheme = artist_schema.dump(artist_query)
+    for album in albums:
+        album_scheme = album_schema.dump(Album.query.get(album.album_id))
+        artist_list_new.append((art_scheme, album_scheme))
+
+    return render_template("artists.html", artists=artists)
+    #return jsonify(artists_schema.dump(artists))
+    #return jsonify(artist_list_new) 
+
+
 
 @artists.route("/", methods=["POST"])
 @jwt_required
@@ -53,13 +65,8 @@ def artist_show(id):
 @jwt_required
 def artist_list_albums(id):
     #Return a single artist's album IDs
-
     albums = db.session.query(aaat).filter(aaat.c.artist_id == id)
     artist = Artist.query.get(id)
-    #artist = db.session.query(Artist).join(Album).filter(Album.id == id).one()
-    #artist = db.session.query(Artist).join(aaat).filter(aaat.c.artist_id == id)
-    #artist = db.session.query(aaat).join(Artist).join(Album).filter(aaat.c.artist_id == id).one()
-    #artist = db.session.query(Album).join(aaat).join(Artist).one()
     artist_list_new = []
     art_scheme = artist_schema.dump(artist)
     for album in albums:
