@@ -11,6 +11,7 @@ class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     album_title = db.Column(db.String())
     album_s_artists_count = db.Column(db.Integer())
+    album_s_tracks_count = db.Column(db.Integer())
     album_s_artists = db.relationship("Artist",
                         secondary=aaat,
                         back_populates="artist_s_albums")

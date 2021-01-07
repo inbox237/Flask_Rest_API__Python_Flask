@@ -10,6 +10,7 @@ class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     playlist_title = db.Column(db.String())
     playlist_s_tracks_count = db.Column(db.Integer())
+    playlist_s_users_count = db.Column(db.Integer())
     playlist_s_tracks = db.relationship("Track",
                         secondary=tpat,
                         back_populates="track_s_playlists")

@@ -42,9 +42,4 @@ def create_app():
     def handle_bad_request(error):
         return (jsonify(error.messages), 400)
 
-    @app.errorhandler(500)
-    def handle_500(error):
-        app.logger.error(error)
-        return ("bad stuff", 500)
-
     return app
