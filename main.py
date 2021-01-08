@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
+import webbrowser
 
 from flask import Flask, jsonify
 from marshmallow.exceptions import ValidationError

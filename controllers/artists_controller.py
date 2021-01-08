@@ -78,7 +78,7 @@ def artist_update(id):
     artists = Artist.query.filter_by(id=id, user_id=user.id)
     
     if artists.count() != 1:
-        return abort(401, description="Unauthorized to update this book")
+        return abort(401, description="Unauthorized to update this artist")
 
     artists.update(artist_fields)
     db.session.commit()

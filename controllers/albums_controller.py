@@ -7,6 +7,7 @@ from models.User_Playlist_Association import user_playlist_association_table as 
 from models.Album import Album
 
 from schemas.TrackSchema import track_schema, tracks_schema
+from schemas.AlbumSchema import album_schema, albums_schema
 from schemas.PlaylistSchema import playlist_schema, playlists_schema
 from schemas.SeasonalDSchema import seasonald_schema, seasonalds_schema
 from schemas.SeasonalPSchema import seasonalp_schema, seasonalps_schema
@@ -69,7 +70,7 @@ def album_update(id):
     albums = Album.query.filter_by(id=id)
     
     if albums.count() != 1:
-        return abort(401, description="Unauthorized to update this book")
+        return abort(401, description="Unauthorized to update this album")
 
     albums.update(album_fields)
     db.session.commit()

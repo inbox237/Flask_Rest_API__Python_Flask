@@ -3,6 +3,7 @@ from models.Album import Album
 from models.User import User
 from models.Track import Track
 from models.Playlist import Playlist
+from models.SeasonalD import SeasonalD
 
 from models.Album_Artist_Association import album_artist_association_table as aaat
 from models.Album_Track_Association import album_track_association_table as atat

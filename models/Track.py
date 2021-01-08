@@ -11,6 +11,7 @@ class Track(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     track_title = db.Column(db.String())
+    track_duration = db.Column(db.Integer())
     track_s_albums_count = db.Column(db.Integer())
     track_s_playlists_count = db.Column(db.Integer())
     track_s_albums = db.relationship("Album",

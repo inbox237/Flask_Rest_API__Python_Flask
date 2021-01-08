@@ -1,4 +1,5 @@
 import unittest
+from flask import Flask
 from main import create_app, db
 
 class TestAlbums(unittest.TestCase):
@@ -11,7 +12,8 @@ class TestAlbums(unittest.TestCase):
         db.create_all()
 
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db", "seed"])
+        runner.invoke(args=["db-custom", "seed"])
+        print("setup ran")
 
     @classmethod
     def tearDown(cls):
@@ -20,11 +22,9 @@ class TestAlbums(unittest.TestCase):
         cls.app_context.pop()
 
     def test_album_index(self):
-        app = create_app()
-        client = app.test_client()
-        response = client.get("/albums/")
+        response = self.client.get("/albums/")
 
         data = response.get_json()
-        
+
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(data, list)
